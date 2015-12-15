@@ -118,7 +118,9 @@ typedef vector<Deck> Box;
 class Table{
 private:
 	int total;
+	int rmv;
 	Box players;
+	vector<int> scores;
 	Deck cards;
 public:
 	Table(Wood);
@@ -128,6 +130,8 @@ public:
 	int run();
 	void resetTotal();
 	void sortCards(Deck&);
+	int getScore(int);
+	void removeCard(int, int);
 	bool pegging();
 	int playCard(Deck&);
 	void printCards(Deck&);

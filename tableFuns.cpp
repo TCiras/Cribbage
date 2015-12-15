@@ -7,14 +7,20 @@ tableFuns.cpp
 
 Table::Table(Wood play){
 	for (int i = 0; i < play.size(); ++i){
-		players[i] = play[i].getHand();
+		players.push_back(play[i].getHand());
+		scores.push_back(play[i].getPts());
 	}
 	
 	total = 0;
+	rmv = 0;
 }
 
 int Table::getTotal(){
 	return total;
+}
+
+int Table::getScore(int num){
+	return scores[num];
 }
 
 bool Table::checkPlayed(Card& card){
@@ -79,27 +85,23 @@ int Table::run(){
 		
 		sortCards(hand);
 		if (num == 7 && hand[hand.size() - 1].getValue() > 7){
-			break;
 		} else if (num == 6 && hand[hand.size() - 1].getValue() > 7){
-			break;
 		} else if (num == 5 && hand[hand.size() - 1].getValue() > 8){
-			break;
 		} else if (num == 4 && hand[hand.size() - 1].getValue() > 9){
-			break;
-		}
-		
-		start = hand[0].getValue();
-		
-		for (int i = 0; i < num; ++i){
-                        if (++start == cards[i].getValue()){
-                                ++count;
-                        } else {
-                                break;
-                        }
-                }
-		
-		if (count == num){
-			return num;
+		} else {
+			start = hand[0].getValue();
+			
+			for (int i = 0; i < num; ++i){
+                        	if (++start == cards[i].getValue()){
+                                	++count;
+	                        } else {
+        	                        break;
+                	        }
+	                }
+			
+			if (count == num){
+				return num;
+			}
 		}
 	}
 	
@@ -118,10 +120,25 @@ bool Table::pegging(){
 	
 	int num;
 	
+	cout << "Got here #3" << endl;
+	
 	for (int i = 0; ; ++i){
-		num = playCard(players[i]);
-	}
+		if (i == players.size()){
+			i = 0;
+		}
+		if (players[i].size() == 0){
+		} else {
+			num = playCard(players[i]);
+			removeCard(rmv, i);
+		}
 		
+		scores[i] += num;
+		
+		if (scores[i] >= 120){
+			return true;
+		}
+	}
+	
 	return false; 
 }
 
@@ -129,14 +146,16 @@ int Table::playCard(Deck& hand){
 	int num;
 	
 	printCards(hand);
-	cout << "6) GO" << endl;
+	cout << "\t5) GO" << endl;
 	
 	do{
 		cout << "Play What card [0-" << hand.size() << "]: ";
 		cin >> num;
-	} while (num > 0 && num < hand.size() + 1 && checkPlayed(hand[num]));
+	} while (num < 0 && num > hand.size() + 1 && checkPlayed(hand[num]));
 	
-	calculate(hand[num]);
+	rmv = num - 1;
+		
+	return calculate(hand[num - 1]);
 }
 
 void Table::printCards(Deck& hand){
@@ -145,10 +164,15 @@ void Table::printCards(Deck& hand){
 	cout << "Your Hand: " << endl;
 	
 	for (i = 0; i < hand.size(); ++i){
-		cout << "\t" << hand[i].toString() << endl;
+		cout << "\t" << i + 1 << ") " << hand[i].toString() << endl;
 	}
 	
-	for (; i < 5; ++i){
-		cout << "\t * of ********" << endl;
+	for (; i < 4; ++i){
+		cout << "\t" << i + 1 << ")  * of ********" << endl;
 	}
+}
+
+void Table::removeCard(int num, int play){
+	cards.push_back(players[play][num]);
+	players[play].erase(players[play].begin() + num);
 }

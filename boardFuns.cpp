@@ -69,11 +69,9 @@ bool Board::playTurn(DeckOfCards& deck){
 		
 	printAll();
 	
-	/* Block for pegging
 	if (pegging()){
 		return true;
 	}
-	*/
 		
 	return count();
 }
@@ -186,9 +184,16 @@ void Board::printAll(){
 }
 
 bool Board::pegging(){
+	cout << "Got here #2" << endl;
 	Table peg(players);
-		
-	return peg.pegging();
+	bool var = peg.pegging();
+	
+	cout << "Got here #i" << endl;
+	for(int i = 0; i < numPlayers(); ++i){
+		players[i].peg(peg.getScore(i) - players[i].getPts());
+	}
+	
+	return var;
 }
 
 Wood& Board::getPlayers(){
