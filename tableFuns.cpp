@@ -37,6 +37,10 @@ int Table::calculate(Card& card){
 	int sum = 0;
 	int value = (card.getValue() > 10 ? 10 : card.getValue());
 	
+	if (!checkPlayed(card)){
+		return -1;
+	}
+	
 	cards.push_back(card);
 	
 	sum += pairs();
@@ -126,10 +130,22 @@ bool Table::pegging(){
 		if (i == players.size()){
 			i = 0;
 		}
+		
 		if (players[i].size() == 0){
+			/* Skip player */
 		} else {
 			num = playCard(players[i]);
-			removeCard(rmv, i);
+			while (num == -1){
+				cout << "Total must be less then 31" << endl;
+				cout << "Coose another card: " << endl;
+				num = playCard(players[i]);
+			}
+			
+			if (num != -2){
+				removeCard(rmv, i);
+			} else {
+				/* Set chain for last card */
+			}
 		}
 		
 		scores[i] += num;
@@ -143,19 +159,27 @@ bool Table::pegging(){
 }
 
 int Table::playCard(Deck& hand){
-	int num;
+	int num, calc;
 	
 	printCards(hand);
-	cout << "\t5) GO" << endl;
-	
+        cout << "\t5) GO" << endl;
+
 	do{
 		cout << "Play What card [0-" << hand.size() << "]: ";
 		cin >> num;
 	} while (num < 0 && num > hand.size() + 1 && checkPlayed(hand[num]));
 	
-	rmv = num - 1;
-		
-	return calculate(hand[num - 1]);
+	if (num == 5){
+		return 0;
+	}
+	
+	calc = calculate(hand[num - 1]);
+	if (calc == -1){
+		return -1;
+	} else {
+		rmv = num - 1;
+		return calc;
+	}
 }
 
 void Table::printCards(Deck& hand){
