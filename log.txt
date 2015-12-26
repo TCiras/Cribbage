@@ -67,5 +67,7 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 			P2: 117
 		which is clearly impossible.
 	ISSUE:
-		Error appears to uccor after reset. After playing first card of 2nd 31, SegFault
+		Error appears to uccor after reset() is called:
+		*** Error in './play': free(): Invalid next size (fast): 0x0000000000b805b0 ***
+		Aborted (core dumped)
 	
