@@ -131,7 +131,7 @@ public:
 	int pairs();
 	int run();
 	bool testDone();
-	void resetTotal();
+	void reset();
 	void sortCards(Deck&);
 	int getScore(int);
 	void removeCard(int, int);

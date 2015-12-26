@@ -73,9 +73,13 @@ int Table::calculate(Card& card){
 	sum += run();
 	sum += fifteen();
 	
-	cout << "The " << card.toString() << " was played for " << sum << "pts." << endl;
+	if (total == 31){
+		sum += 2;
+		//reset();
+	}
 	
-	cout << total << endl;
+	cout << "The " << card.toString() << " was played for " << sum << "pts." << endl;
+	cout << "Pts. played is now " << total  << "." << endl;
 	
 	return sum;
 }
@@ -84,12 +88,14 @@ int Table::calculate(Card& card){
 	Resets the total, empties the played cards, and sets all GO to false
 	NOTE: Should do this when 31 is reached or all players say GO
 */
-void Table::resetTotal(){
+void Table::reset(){
 	total = 0;
 	for (int i = 0; i < go.size(); ++i){
 		go[i] = false;
 	}
-	/* Empty played cards */
+	for (int i = cards.size(); i > -1; --i){
+		cards.erase(cards.begin() + i);
+	}
 }
 
 
@@ -291,7 +297,7 @@ void Table::printCards(Deck& hand){
 	}
 	
 	for (; i < 4; ++i){ /* No longer a card in hand. Keeps numbering correct */
-		cout << "\t" << i + 1 << ")  * of ********" << endl;
+		cout << "\t" << i + 1 << ") * of ********" << endl;
 	}
 }
 
