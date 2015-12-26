@@ -43,3 +43,9 @@ Log Entries Begin 12/10/15
 		Run 5: check last 5 (max<=8)
 		Run 6: check last 6 (max<=7)
 		Run 7: check last 7 (max<=7)
+
+12/26/15:
+	Merry Christmas!
+	Going through and adding a breif description of each function to make it easier for others to look over.
+	Pegging still doesn't work.
+	

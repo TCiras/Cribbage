@@ -5,12 +5,21 @@ handFuns.cpp
 
 #include "crib.h"
 
+/*
+	Constructor
+*/
 Hand::Hand(){
 	score = 0;
 }
 
+/*
+	Checks the hand for any pairs
+	Input:
+		fifth = the value of the top card
+	Output:
+		The number of points earned by getting pairs
+*/
 int Hand::pair(int fifth){
-	/* Fifth needs to be the value */
 	vector<int> cards = {hand[0].getValue(), hand[1].getValue(), hand[2].getValue(), hand[3].getValue(), fifth};
 	int matches = 0;
 	
@@ -18,48 +27,45 @@ int Hand::pair(int fifth){
 	
 	/* 4 Kind Test */
 	if (cards[0] == cards[1] && cards[0] == cards[2] && cards[0] == cards[3]){
-		// cout << "P: 12" << endl;
 		return 12;
 	} else if (cards[1] == cards[2] && cards[1] == cards[3] && cards[1] == cards[4]){
-		// cout << "P: 12" << endl;
 		return 12;
 	}
 	/* 3 Kind Test */
 	else if (cards[0] == cards[1] && cards[0] == cards[2]){
-		// cout << "P: 6" << endl;
 		return 6;
 	} else if (cards[1] == cards[2] && cards[1] == cards[3]){
-		// cout << "P: 6"  << endl;
 		return 6;
 	} else if (cards[2] == cards[3] && cards[2] == cards[4]){
-		// cout << "P: 6" << endl;
 		return 6;
 	}
 	/* 2 Pair Test */
 	else if (cards[0] == cards[1] && cards[3] == cards[4]){
-		// cout << "P: 4" << endl;
 		return 4;
 	} else if (cards[0] == cards[1] && cards[2] == cards[3]){
-		// cout << "P: 4" << endl;
 		return 4;
 	} else if (cards[1] == cards[2] && cards[3] == cards[4]){
-		// cout << "P: 4" << endl;
 		return 4;
 	}
 	/* 1 Pair Test */
 	else {
 		for (int i = 0; i < 4; ++i){
 			if (cards[i] == cards[i + 1]){
-				// cout << "P: 2" << endl;
 				return 2;
 		}	}
 	}
 	/* No Pairs */
-	// cout << "P: 0" << endl;
 	return 0;
 	
 }
 
+/*
+	Checks the hand for runs
+	Input:
+		fifth = the vlaue of the top card
+	Output:
+		The number of points earned by runs
+*/
 int Hand::run(int fifth){
 	/* Fifth needs to be the value */
 	int start, count, sum = 0, mult = 1, last = -1;
@@ -88,31 +94,36 @@ int Hand::run(int fifth){
 		}
 		
 		if (count == 5){
-			// cout << "R: 5" << mult;
 			return 5 * mult;
 		} else if (count == 4){
-			// cout << "R: " << 4 * mult << endl;
 			return 4 * mult;
 		} else if (count == 3){
-			// cout << "R: " << 3 * mult << endl;
 			return 3 * mult;
 		} else {
 			/* Look for another */
 		}
 	}
 	
-	// cout << "R: 0" << endl;
 	return 0;
 }
 
+/*
+	Print function for the cards in the hand
+*/
 void Hand::print(){
         for (int i = 0; i < hand.size(); ++i){
                 cout << "\t\t" << i + 1 << ") " << hand[i].toString() << endl;
         }
 }
 
+/*
+	Checks teh hand for fifteens
+	Input:
+		fifth = the value of the top card
+	Output:
+		The number of points earned by getting fifteens
+*/
 int Hand::fifteen(int fifth){
-	/* Fifth needs to be the value */
 	vector<int> cards = {hand[0].getValue(), hand[1].getValue(), hand[2].getValue(), hand[3].getValue(), fifth};
 	int sum = 0;
 	
@@ -132,7 +143,6 @@ int Hand::fifteen(int fifth){
 			int second = (cards[j] > 10 ? 10 : cards[j]);
 			for (int k = j + 1; k < 5; ++k){
 				int third = (cards[k] > 10 ? 10 : cards[k]);
-				// cout << endl << first << "+" << second << "+" << third << "=" << (first + second + third) << endl;
 				if ((first + second + third) == 15){
 					sum += 2;
 				}
@@ -156,12 +166,18 @@ int Hand::fifteen(int fifth){
 		sum += 2;
 	}
 	
-	// cout << "5: " <<sum << endl;
 	return sum;
 }
 
+/*
+	Checks the hand for a flush
+	Input:
+		fifth = the suit of the top card
+		crib = a variable which telles if the hand is the crib
+	Output:
+		The number of points earned by getting a flush
+*/
 int Hand::flush(int fifth, int crib){
-	/* Fifth needs to be the suit */
 	vector<int> cards = {hand[0].getSuit(), hand[1].getSuit(), hand[2].getSuit(), hand[3].getSuit(), fifth};
 	int count = 1;	
 	
@@ -175,28 +191,29 @@ int Hand::flush(int fifth, int crib){
 	
 	if (crib){
 		if (count == 5){
-			// cout << "F: 5" << endl;
 			return 5;
 		} else {
-			// cout << "F: 0" << endl;
 			return 0;
 		}
 	} else {
 		if (count == 5){
-			// cout << "F: 5" << endl;
 			return 5;
 		} else if (count == 4){
-			// cout << "F: 4" << endl;
 			return 4;
 		} else {
-			// cout << "F: 0" << endl;
 			return 0;
 		}
 	}	 
 }
 
+/*
+	Checks the hand for the Right Jack
+	Input:
+		fifth = the suit of the top card
+	Output:
+		The number of points earned by having the Right Jack
+*/
 int Hand::noobs(int fifth){
-	/* Fifth needs to be suit */
 	int yes = 0;
 	
 	for (int i = 0; i < 4; ++i){
@@ -208,6 +225,12 @@ int Hand::noobs(int fifth){
 	return yes;
 }
 
+/*
+	Calculates the number of points earned by the hand
+	Inputs:
+		top = the top card in the deck
+		crib = A varibale which tells if the hand is the crib or not
+*/
 void Hand::calculate(Card& top, int crib){
 	int sum = 0, topValue = top.getValue(), topSuit = top.getSuit();
 	
@@ -222,20 +245,38 @@ void Hand::calculate(Card& top, int crib){
 	
 }
 
+/*
+	Getter for the hand's score
+*/
 int Hand::getScore(){
 	return score;
 }
 
+/*
+	Remove's a card from the hand
+	Input:
+		num = which card (Not Index)
+*/
 void Hand::removeCard(int num){
         hand.erase(hand.begin() + num - 1);
 }
 
+/*
+	Empty's the hand
+*/
 void Hand::clearHand(){
         for (int i = 4; i > 0; --i){
                 removeCard(i);
         }
 }
 
+/*
+	Getter for a card in the hand
+	Input:
+		num = the card to get (Index)
+	Output:
+		The card at index num
+*/
 Card& Hand::getCard(int num){
 	return hand[num];
 }

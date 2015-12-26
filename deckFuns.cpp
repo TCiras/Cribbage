@@ -5,6 +5,10 @@ deckFuns.cpp
 
 #include "crib.h"
 
+/*
+	Constructor
+	Created one of each card to start
+*/
 DeckOfCards::DeckOfCards(){
         currentCard = 0;
 
@@ -16,6 +20,9 @@ DeckOfCards::DeckOfCards(){
         }
 }
 
+/*
+	Shuffles the deck using the time as the random number
+*/
 void DeckOfCards::shuffle(){
         for(int i = 0; i < 7; ++i){
 		for(int j = 0; j < 52; ++j){
@@ -29,10 +36,20 @@ void DeckOfCards::shuffle(){
 	}
 }
 
+/*
+	"Deals" a card by moving the head pointer
+	Output:
+		The card at the previous head
+*/
 Card DeckOfCards::dealCard(){
 	return deck[currentCard++];
 }
 
+/*
+	Checks to make certain there are still cards in the deck
+	Output:
+		A bool that is true when there are cards in the deck
+*/
 bool DeckOfCards::moreCards(){
 	if (currentCard == 52){
 		return false;
@@ -41,6 +58,9 @@ bool DeckOfCards::moreCards(){
 	}
 }
 
+/*
+	Print function for the deck
+*/
 void DeckOfCards::printDeck(){
 	cout << "Printing Deck" << endl;
 	
@@ -49,6 +69,10 @@ void DeckOfCards::printDeck(){
 	}
 }
 
+/*
+	Deck Reseter. Moves the head pointer back to position zero.
+	This allows all cards to be used in the next turn
+*/
 void DeckOfCards::reset(){
 	currentCard = 0;
 }

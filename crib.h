@@ -11,7 +11,7 @@ crib.h
 #include <algorithm>
 using namespace std;
 
-static vector<string> faces = {"Joker","A","2","3","4","5","6","7","8","9","10","J","Q","K"};
+static vector<string> faces = {"Joker","A","2","3","4","5","6","7","8","9","10","J","Q","K"}; /* Joker allows 15 to work properly */
 static vector<string> suits = {"Spades","Hearts","Clubs","Diamonds"};
 
 class Card{
@@ -126,6 +126,7 @@ public:
 	Table(Wood);
 	int getTotal();
 	bool checkPlayed(Card&);
+	int fifteen();
 	int pairs();
 	int run();
 	void resetTotal();

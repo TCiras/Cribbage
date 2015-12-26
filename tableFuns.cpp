@@ -5,6 +5,11 @@ tableFuns.cpp
 
 #include "crib.h"
 
+/*
+	Constructor
+	Input:
+		play = vetcor of players
+*/
 Table::Table(Wood play){
 	for (int i = 0; i < play.size(); ++i){
 		players.push_back(play[i].getHand());
@@ -15,14 +20,25 @@ Table::Table(Wood play){
 	rmv = 0;
 }
 
+/*
+	Getter for the total
+*/
 int Table::getTotal(){
 	return total;
 }
 
+/*
+	Getter for a player's score
+	Input:
+		num = which player (Index)
+*/
 int Table::getScore(int num){
 	return scores[num];
 }
 
+/*
+	Checks the card that was played to insure that the total is under 31
+*/
 bool Table::checkPlayed(Card& card){
 	int value = (card.getValue() > 10 ? 10 : card.getValue());
 	
@@ -33,6 +49,13 @@ bool Table::checkPlayed(Card& card){
 	return true;
 }
 
+/*
+	Calculates the number of points earned by having played a card
+	Input:
+		card = card being played
+	Output:
+		The number of points earned by playing that card
+*/
 int Table::calculate(Card& card){
 	int sum = 0;
 	int value = (card.getValue() > 10 ? 10 : card.getValue());
@@ -45,6 +68,7 @@ int Table::calculate(Card& card){
 	
 	sum += pairs();
 	sum += run();
+	sum += fifteen();
 	
 	cout << "The " << card.toString() << " was played for " << sum << "pts." << endl;
 	
@@ -52,10 +76,33 @@ int Table::calculate(Card& card){
 	return sum;
 }
 
+/*
+	Resets the total
+	NOTE: Should do this when 31 is reached or all players say GO
+*/
 void Table::resetTotal(){
 	total = 0;
 }
 
+
+/*
+	Checks the played cards for fifteen
+	Output:
+		The number of points earned by fifteen on the table
+*/
+int Table::fifteen(){
+	if (total == 15){
+		return 2;
+	} else {
+		return 0;
+	}
+}
+
+/*
+	Checks the played card for pairs
+	Output:
+		The number of points earned by playing pairs
+*/
 int Table::pairs(){
 	int sum = 0, size = cards.size();
 	
@@ -76,10 +123,16 @@ int Table::pairs(){
 	return sum;
 }
 
+/*
+	Checks the played card for runs
+	See log to understand skips (12/14/15)
+	Output:
+		The number of points earned by playing runs 
+*/
 int Table::run(){
 	int count, start;
 	
-	for (int num = 7; num > 2; --num){ /* Test run sizes 3 - 7 */
+	for (int num = 7; num > 2; --num){ /* Test run sizes 7 - 3 */
 		Deck hand;
 		count = 1;
 		
@@ -88,10 +141,10 @@ int Table::run(){
 		}
 		
 		sortCards(hand);
-		if (num == 7 && hand[hand.size() - 1].getValue() > 7){
-		} else if (num == 6 && hand[hand.size() - 1].getValue() > 7){
-		} else if (num == 5 && hand[hand.size() - 1].getValue() > 8){
-		} else if (num == 4 && hand[hand.size() - 1].getValue() > 9){
+		if (num == 7 && hand[hand.size() - 1].getValue() > 7){ /* Skip */
+		} else if (num == 6 && hand[hand.size() - 1].getValue() > 7){ /* Skip */
+		} else if (num == 5 && hand[hand.size() - 1].getValue() > 8){ /* Skip */
+		} else if (num == 4 && hand[hand.size() - 1].getValue() > 9){ /* Skip */
 		} else {
 			start = hand[0].getValue();
 			
@@ -113,18 +166,24 @@ int Table::run(){
 		
 }
 
+/*
+	Sorts the "hand" given. Used for calculating runs.
+*/
 void Table::sortCards(Deck& hand){
         sort(hand.begin(), hand.end());
 }
 
+/*
+	Place where pegging should run for a single turn
+	Output:
+		A bool that is true if there is a winner
+*/
 bool Table::pegging(){
 	/* Needs a loop that rotates through the players */
 	/* 	Needs an option fo a player to GO 	 */
 	/* Should show cards remaining and current total */
 	
 	int num;
-	
-	cout << "Got here #3" << endl;
 	
 	for (int i = 0; ; ++i){
 		if (i == players.size()){
@@ -158,6 +217,13 @@ bool Table::pegging(){
 	return false; 
 }
 
+/*
+	Interface of playing cards.
+	Input:
+		hand = the hand from which a card is going to be played
+	Output:
+		Number of points earned by playing thh card;
+*/
 int Table::playCard(Deck& hand){
 	int num, calc;
 	
@@ -182,6 +248,11 @@ int Table::playCard(Deck& hand){
 	}
 }
 
+/*
+	Print function for the hand
+	Input:
+		hand = the hand to print
+*/
 void Table::printCards(Deck& hand){
 	int i;
 	
@@ -191,11 +262,17 @@ void Table::printCards(Deck& hand){
 		cout << "\t" << i + 1 << ") " << hand[i].toString() << endl;
 	}
 	
-	for (; i < 4; ++i){
+	for (; i < 4; ++i){ /* No longer a card in hand. Keeps numbering correct */
 		cout << "\t" << i + 1 << ")  * of ********" << endl;
 	}
 }
 
+/*
+	Talkes card from player and puts it on the table
+	Input:
+		num = which card to remove (Index)
+		play = which player (Index)
+*/
 void Table::removeCard(int num, int play){
 	cards.push_back(players[play][num]);
 	players[play].erase(players[play].begin() + num);

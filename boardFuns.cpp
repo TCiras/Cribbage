@@ -5,6 +5,11 @@ boardFuns.cpp
 
 #include "crib.h"
 
+/*
+	Constructor
+	Inputs:
+		num = Number of players
+*/
 Board::Board(int num){
 	for (int i = 0; i < num; ++i){
 		addPlayer();
@@ -12,33 +17,64 @@ Board::Board(int num){
 	who = 1;
 }
 
+/*
+	Adds a player to the player vector
+*/
 void Board::addPlayer(){
 	Player player(numPlayers());
 	players.push_back(player);
 }
 
+/*
+	Return's player at index p - 1
+	Inputs:
+		p = What player # (Not Index)
+	Output:
+		Number of points belonging to the player
+*/
 int Board::getPlayer(int p){
 	return players[p - 1].getPts();
 }
 
+
+/*
+	Moves the player's peg by giving the player points
+	Inputs:
+		pla = Which player
+		num = How many points to add
+*/
 void Board::peg(int pla, int num){
 	players[pla - 1].peg(num);
 }
 
+
+/*
+	Getter for the player who has the crib
+*/
 int Board::getWho(){
 	return who;
 }
 
+
+/*
+	Setter for the player who has the crib.
+	The player is just inceremented
+*/
 void Board::setWho(){
-	// cout << "Who: " << who << endl;
 	if ((who + 1) != numPlayers()){
 		++who;
 	} else {
 		who = 0;
 	}
-	// cout << "Who: " << who << endl;
 }
 
+/*
+	Play a turn
+	Inputs:
+		deck = The deck of cards to preserve shuffle
+	Output:
+		A bool that is true if there is a winner
+*/
 bool Board::playTurn(DeckOfCards& deck){
 	cout << "The crib belongs to Player " << who + 1 << endl << endl;
 	
@@ -72,10 +108,15 @@ bool Board::playTurn(DeckOfCards& deck){
 	if (pegging()){
 		return true;
 	}
-		
+			
 	return count();
 }
 
+/*
+	Calculates the amount of points earned by each player in the propper order
+	Output:
+		A bool that is true if there is a winner
+*/
 bool Board::count(){
 	for (int i = who + 1; i < numPlayers(); ++i){
 		players[i].peg(players[i].getScore());
@@ -103,6 +144,9 @@ bool Board::count(){
 	return false;
 }
 
+/*
+	A getter for the number of players
+*/
 int Board::numPlayers(){
 	if (players.size() == 0){
 		return 0;
@@ -110,6 +154,12 @@ int Board::numPlayers(){
 	return players.size();
 }
 
+/*
+	Players discard cards to the crib
+	Inputs:
+		num = Which player (Index)
+		hand = The player's hand
+*/
 void Board::toCrib(int num, Deck& hand){
         int a, b;
 	
@@ -137,10 +187,18 @@ void Board::toCrib(int num, Deck& hand){
 	cout << endl << endl;
 }
 
+/*
+	Takes a card and puts it in the crib
+	Input:
+		card = The card
+*/
 void Board::addCrib(Card& card){
 	crib.addCard(card);
 }
 
+/*
+	Empty everyone's hand to start the next turn
+*/
 void Board::clearHands(){
 	for (int i = 0; i < numPlayers(); ++i){
 		players[i].clearHand();
@@ -149,6 +207,9 @@ void Board::clearHands(){
 	crib.clearHand();
 }
 
+/*
+	A print function that display's each player's hands and the crib
+*/
 void Board::printAll(){
 	cout << endl << endl;
 	for (int i = 0; i < numPlayers(); ++i){ /* Print titles */
@@ -183,12 +244,13 @@ void Board::printAll(){
 	cout << "Pts: " << crib.getScore() << endl << endl << endl;
 }
 
+/*
+	Pegging wrapper.  Actual pegging done in the Table Class
+*/
 bool Board::pegging(){
-	cout << "Got here #2" << endl;
 	Table peg(players);
 	bool var = peg.pegging();
 	
-	cout << "Got here #i" << endl;
 	for(int i = 0; i < numPlayers(); ++i){
 		players[i].peg(peg.getScore(i) - players[i].getPts());
 	}
@@ -196,6 +258,9 @@ bool Board::pegging(){
 	return var;
 }
 
+/*
+	Getter for the players vector
+*/
 Wood& Board::getPlayers(){
 	return players;
 }
