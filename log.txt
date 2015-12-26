@@ -73,3 +73,5 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 	
 	NOTE ON ISSUE 1:
 		Problem lies in pegging somewhere.  COmmenting out the call to pegging works the scoring correctly.
+	ISSUE 3:
+		"The Joker of Spades was played for 0pts."  Wait a minute...
