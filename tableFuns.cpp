@@ -194,10 +194,6 @@ void Table::sortCards(Deck& hand){
 		A bool that is true if there is a winner
 */
 bool Table::pegging(){
-	/* Needs a loop that rotates through the players */
-	/* 	Needs an option fo a player to GO 	 */
-	/* Should show cards remaining and current total */
-	
 	int num;
 	
 	for (int i = 0; ; ++i){
@@ -240,6 +236,7 @@ bool Table::pegging(){
 				if(testDone()){
 					reset();
 				}
+				scores[i] += 1;
 			}
 		}
 		
