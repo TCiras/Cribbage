@@ -66,4 +66,6 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 			P1: 120
 			P2: 117
 		which is clearly impossible.
-		
+	ISSUE:
+		Error appears to uccor after reset. After playing first card of 2nd 31, SegFault
+	

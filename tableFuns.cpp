@@ -61,6 +61,8 @@ int Table::calculate(Card& card){
 	int sum = 0;
 	int value = (card.getValue() > 10 ? 10 : card.getValue());
 	
+	cout << "Called" << endl;
+	
 	if (!checkPlayed(card)){
 		return -1;
 	}
