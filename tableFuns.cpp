@@ -66,6 +66,8 @@ int Table::calculate(Card& card){
 	}
 	
 	cards.push_back(card);
+		
+	total += value;
 	
 	sum += pairs();
 	sum += run();
@@ -73,22 +75,21 @@ int Table::calculate(Card& card){
 	
 	cout << "The " << card.toString() << " was played for " << sum << "pts." << endl;
 	
-	total += value;
-	
 	cout << total << endl;
 	
 	return sum;
 }
 
 /*
-	Resets the total and sets all GO to false
+	Resets the total, empties the played cards, and sets all GO to false
 	NOTE: Should do this when 31 is reached or all players say GO
 */
 void Table::resetTotal(){
 	total = 0;
 	for (int i = 0; i < go.size(); ++i){
 		go[i] = false;
-	}	
+	}
+	/* Empty played cards */
 }
 
 
@@ -111,7 +112,7 @@ int Table::fifteen(){
 		The number of points earned by playing pairs
 */
 int Table::pairs(){
-	int sum = 0, size = cards.size();
+	int sum = 0, size = cards.size() - 1;
 	
 	if (size == 1){
 		sum = 0;
@@ -136,7 +137,7 @@ int Table::pairs(){
 	Output:
 		The number of points earned by playing runs 
 */
-int Table::run(){
+int Table::run(){ /* Not Working */
 	int count, start;
 	
 	for (int num = 7; num > 2; --num){ /* Test run sizes 7 - 3 */
@@ -148,6 +149,7 @@ int Table::run(){
 		}
 		
 		sortCards(hand);
+		
 		if (num == 7 && hand[hand.size() - 1].getValue() > 7){ /* Skip */
 		} else if (num == 6 && hand[hand.size() - 1].getValue() > 7){ /* Skip */
 		} else if (num == 5 && hand[hand.size() - 1].getValue() > 8){ /* Skip */
@@ -156,6 +158,7 @@ int Table::run(){
 			start = hand[0].getValue();
 			
 			for (int i = 0; i < num; ++i){
+				cout << start << " " << cards[i].getValue() << endl;
                         	if (++start == cards[i].getValue()){
                                 	++count;
 	                        } else {

@@ -25,8 +25,14 @@ int Hand::pair(int fifth){
 	
 	sort(cards.begin(), cards.end());
 	
+	/* 3 Kind w/ Pair Test */
+	if (cards[0] == cards[1] && cards[0] == cards[2] && cards[3] == cards[4]){
+		return 8;
+	} else if (cards[0] == cards[1] && cards[2] == cards[3] && cards[2] == cards[4]){
+		return 8;
+	}
 	/* 4 Kind Test */
-	if (cards[0] == cards[1] && cards[0] == cards[2] && cards[0] == cards[3]){
+	else if (cards[0] == cards[1] && cards[0] == cards[2] && cards[0] == cards[3]){
 		return 12;
 	} else if (cards[1] == cards[2] && cards[1] == cards[3] && cards[1] == cards[4]){
 		return 12;
