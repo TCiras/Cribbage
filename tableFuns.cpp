@@ -14,6 +14,7 @@ Table::Table(Wood play){
 	for (int i = 0; i < play.size(); ++i){
 		players.push_back(play[i].getHand());
 		scores.push_back(play[i].getPts());
+		go.push_back(false);
 	}
 	
 	total = 0;
@@ -73,15 +74,21 @@ int Table::calculate(Card& card){
 	cout << "The " << card.toString() << " was played for " << sum << "pts." << endl;
 	
 	total += value;
+	
+	cout << total << endl;
+	
 	return sum;
 }
 
 /*
-	Resets the total
+	Resets the total and sets all GO to false
 	NOTE: Should do this when 31 is reached or all players say GO
 */
 void Table::resetTotal(){
 	total = 0;
+	for (int i = 0; i < go.size(); ++i){
+		go[i] = false;
+	}	
 }
 
 
@@ -184,13 +191,14 @@ bool Table::pegging(){
 	/* Should show cards remaining and current total */
 	
 	int num;
+	bool done = false;
 	
 	for (int i = 0; ; ++i){
 		if (i == players.size()){
 			i = 0;
 		}
 		
-		if (players[i].size() == 0){
+		if (players[i].size() == 0 || go[i] == true){
 			/* Skip player */
 		} else {
 			num = playCard(players[i]);
@@ -204,6 +212,8 @@ bool Table::pegging(){
 				removeCard(rmv, i);
 			} else {
 				/* Set chain for last card */
+				go[i] = true;
+				done = testDone();
 			}
 		}
 		
@@ -215,6 +225,21 @@ bool Table::pegging(){
 	}
 	
 	return false; 
+}
+
+/*
+	Tests to see if all have said go
+	Output:
+		A bool that is true if all have said go.
+*/
+bool Table::testDone(){
+	for (int i = 0; i < go.size(); ++i){
+		if (go[i] == false){
+			return false;
+		}
+	}
+	
+	return true;
 }
 
 /*
@@ -236,7 +261,7 @@ int Table::playCard(Deck& hand){
 	} while (num < 0 && num > hand.size() + 1 && checkPlayed(hand[num]));
 	
 	if (num == 5){
-		return 0;
+		return -2;
 	}
 	
 	calc = calculate(hand[num - 1]);

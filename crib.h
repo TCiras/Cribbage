@@ -121,6 +121,7 @@ private:
 	int rmv;
 	Box players;
 	vector<int> scores;
+	vector<bool> go;
 	Deck cards;
 public:
 	Table(Wood);
@@ -129,6 +130,7 @@ public:
 	int fifteen();
 	int pairs();
 	int run();
+	bool testDone();
 	void resetTotal();
 	void sortCards(Deck&);
 	int getScore(int);
