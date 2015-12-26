@@ -48,4 +48,4 @@ Log Entries Begin 12/10/15
 	Merry Christmas!
 	Going through and adding a breif description of each function to make it easier for others to look over.
 	Pegging still doesn't work.
-	
+	Added in an array of GO responces to hopefuly be able to check for when all have said GO
