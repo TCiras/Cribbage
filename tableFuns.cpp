@@ -75,7 +75,6 @@ int Table::calculate(Card& card){
 	
 	if (total == 31){
 		sum += 2;
-		//reset();
 	}
 	
 	cout << "The " << card.toString() << " was played for " << sum << "pts." << endl;
@@ -219,8 +218,9 @@ bool Table::pegging(){
 			
 			if (num != -2){
 				removeCard(rmv, i);
+			} else if (total == 31){
+				reset();
 			} else {
-				/* Set chain for last card */
 				go[i] = true;
 				done = testDone();
 			}
