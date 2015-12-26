@@ -132,7 +132,6 @@ int Table::pairs(){
 			}
 		}
 	}
-	
 	return sum;
 }
 
@@ -149,12 +148,13 @@ int Table::run(){ /* Not Working */
 		Deck hand;
 		count = 1;
 		
-		for (int i = 0; i < num; ++i){
+		for (int i = 0; i < num; ++i){ // Looks at only the number of cards in the run
 			hand.push_back(cards[cards.size() - i]);
 		}
 		
-		sortCards(hand);
+		sortCards(hand); // Sorts them for easy run calculations
 		
+		/* Mike the Commuter's Algorithm */
 		if (num == 7 && hand[hand.size() - 1].getValue() > 7){ /* Skip */
 		} else if (num == 6 && hand[hand.size() - 1].getValue() > 7){ /* Skip */
 		} else if (num == 5 && hand[hand.size() - 1].getValue() > 8){ /* Skip */
@@ -199,15 +199,30 @@ bool Table::pegging(){
 	/* Should show cards remaining and current total */
 	
 	int num;
-	bool done = false;
 	
 	for (int i = 0; ; ++i){
 		if (i == players.size()){
 			i = 0;
 		}
 		
-		if (players[i].size() == 0 || go[i] == true){
-			/* Skip player */
+		if (players[i].size() == 0){
+			bool done = true;
+			for (int j = 0; j < players.size(); ++j){
+				if (players[j].size() == 0){
+					done = true;
+				} else {
+					done = false;
+					break;
+				}
+			}
+			
+			if (done){
+				break;
+			}
+		} else if (go[i] == true){
+			if(testDone()){
+				reset();
+			}
 		} else {
 			num = playCard(players[i]);
 			while (num == -1){
@@ -222,7 +237,9 @@ bool Table::pegging(){
 				reset();
 			} else {
 				go[i] = true;
-				done = testDone();
+				if(testDone()){
+					reset();
+				}
 			}
 		}
 		
