@@ -61,13 +61,15 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 	Just notices a rare case previously unaccounted for, 3 kind and pair // FIXED
 	Something strange is happening with pegging runs.
 	I think I did the two things with 31, but when 31 is reached, the program halts indefinatly
-	ISSUE:
+	ISSUE 1:
 		I just played one hand w/ pegging succesfully.  The issue is that after this one hand, the scores were:
 			P1: 120
 			P2: 117
 		which is clearly impossible.
-	ISSUE:
-		Error appears to uccor after reset() is called:
+	ISSUE 2:
+		Error appears to uccor after reset() is called: // NOTE: Not always
 		*** Error in './play': free(): Invalid next size (fast): 0x0000000000b805b0 ***
 		Aborted (core dumped)
 	
+	NOTE ON ISSUE 1:
+		Problem lies in pegging somewhere.  COmmenting out the call to pegging works the scoring correctly.

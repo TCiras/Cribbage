@@ -108,7 +108,7 @@ bool Board::playTurn(DeckOfCards& deck){
 	if (pegging()){
 		return true;
 	}
-			
+
 	return count();
 }
 
