@@ -236,6 +236,8 @@ bool Table::pegging(){
 				if(testDone()){
 					reset();
 				}
+				
+				cout << "Last Card" << endl;
 				scores[i] += 1;
 			}
 		}
@@ -276,14 +278,14 @@ bool Table::testDone(){
 int Table::playCard(Deck& hand, int play){
 	int num, calc;
 	
-	cout << endl << endl << "Player " << play << ":" << endl;
+	cout << endl << endl << "Player " << play + 1 << ":" << endl;
 	printCards(hand);
         cout << "\t5) GO" << endl;
 
 	do{
 		cout << "Play What card [0-" << hand.size() << "]: ";
 		cin >> num;
-	} while (num < 0 && num > hand.size() + 1 && checkPlayed(hand[num]));
+	} while ((num < 0 && num > 5) && checkPlayed(hand[num]));
 	
 	if (num == 5){
 		return -2;

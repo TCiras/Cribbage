@@ -84,4 +84,5 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 	ISSUE:
 		After pegging, players recieve -1 pts.
 		They should have gotten 0.
-		
+	ISSUE:
+		If user says to play card 7, SegFault	
