@@ -136,7 +136,7 @@ public:
 	int getScore(int);
 	void removeCard(int, int);
 	bool pegging();
-	int playCard(Deck&);
+	int playCard(Deck&, int);
 	void printCards(Deck&);
 	int calculate(Card&);
 };

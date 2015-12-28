@@ -75,3 +75,8 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 		Problem lies in pegging somewhere.  COmmenting out the call to pegging works the scoring correctly.
 	ISSUE 3:
 		"The Joker of Spades was played for 0pts."  Wait a minute...
+		Printing the deck reveals that the cards are correctly created with no jokers.
+	
+12/28/15
+	Thought I'd look over the 31 problem again.
+	Suggestion from Ian: clearing the vector is broken.  Seting an alternative solution.	

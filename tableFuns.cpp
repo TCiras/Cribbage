@@ -94,9 +94,7 @@ void Table::reset(){
 	for (int i = 0; i < go.size(); ++i){
 		go[i] = false;
 	}
-	for (int i = cards.size(); i > -1; --i){
-		cards.erase(cards.begin() + i);
-	}
+	cards.clear();
 }
 
 
@@ -198,14 +196,14 @@ void Table::sortCards(Deck& hand){
 bool Table::pegging(){
 	int num;
 	
-	for (int i = 0; ; ++i){
-		if (i == players.size()){
+	for (int i = 0; ; ++i){ /* Issue is here */
+		if (i == players.size()){ /* Rotate properly through the players */
 			i = 0;
 		}
 		
-		if (players[i].size() == 0){
+		if (players[i].size() == 0){ /* If the player has no cards left */
 			bool done = true;
-			for (int j = 0; j < players.size(); ++j){
+			for (int j = 0; j < players.size(); ++j){ /* See if anyone else has cards */
 				if (players[j].size() == 0){
 					done = true;
 				} else {
@@ -217,23 +215,23 @@ bool Table::pegging(){
 			if (done){
 				break;
 			}
-		} else if (go[i] == true){
+		} else if (go[i] == true){ /* Looks to see if all have said go */
 			if(testDone()){
 				reset();
 			}
-		} else {
-			num = playCard(players[i]);
-			while (num == -1){
+		} else { /* Player plays a card */
+			num = playCard(players[i], i);
+			while (num == -1){ /* Invalid card */
 				cout << "Total must be less then 31" << endl;
 				cout << "Coose another card: " << endl;
-				num = playCard(players[i]);
+				num = playCard(players[i], i);
 			}
 			
-			if (num != -2){
+			if (num != -2){ /* If valid card and not GO */
 				removeCard(rmv, i);
-			} else if (total == 31){
+			} else if (total == 31){ /* If 31 */
 				reset();
-			} else {
+			} else { /* If GO*/
 				go[i] = true;
 				if(testDone()){
 					reset();
@@ -271,12 +269,14 @@ bool Table::testDone(){
 	Interface of playing cards.
 	Input:
 		hand = the hand from which a card is going to be played
+		play = which player
 	Output:
 		Number of points earned by playing thh card;
 */
-int Table::playCard(Deck& hand){
+int Table::playCard(Deck& hand, int play){
 	int num, calc;
 	
+	cout << endl << endl << "Player " << play << ":" << endl;
 	printCards(hand);
         cout << "\t5) GO" << endl;
 
