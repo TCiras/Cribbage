@@ -99,16 +99,20 @@ bool Board::playTurn(DeckOfCards& deck){
 	cout << "The top card is:" << endl;
 	cout << "\t\t" << faces[top.getValue()] << " of " << suits[top.getSuit()] << endl;
 	
-	if (top.getValue() == 10){
+	if (top.getValue() == 11){
 		players[who].peg(2);
+		if (players[who].getPts() >= 120){
+			players[who].peg(120 - players[who].getPts());
+			return true;
+		}
 	}
-		
-	printAll();
 	
 	if (pegging()){
 		return true;
 	}
-
+	
+	printAll();
+	
 	return count();
 }
 

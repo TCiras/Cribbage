@@ -65,11 +65,8 @@ int Table::calculate(Card& card){
 	
 	cards.push_back(card);
 	
-	cout << pairs() << " in pairs" << endl;
 	sum += pairs();
-	cout << run() << " in a run" << endl;
 	sum += run();
-	cout << fifteen() << " for fifteen" << endl;
 	sum += fifteen();
 	
 	if (total == 31){
@@ -117,9 +114,6 @@ int Table::fifteen(){
 int Table::pairs(){
 	int sum = 0, size = cards.size() - 1;
 	
-	cout << cards[size].getValue() << " vs " << cards[size - 1].getValue() << endl;
-	cout << cards.size() << endl;
-	
 	if (size + 1 == 1){
 		sum = 0;
 	} else if (cards[size].getValue() == cards[size - 1].getValue()){
@@ -142,20 +136,20 @@ int Table::pairs(){
 	Output:
 		The number of points earned by playing runs 
 */
-int Table::run(){ /* Not Working */
+int Table::run(){
 	int count, start;
 	
-	for (int num = 7; num > 2; --num){ /* Test run sizes 7 - 3 */
+	for (int num = 7; num > 2; --num){
 		Deck hand;
 		count = 1;
 		
 		if (cards.size() < num){ /* Skip */
 		} else {
-			for (int i = 0; i < num; ++i){ // Looks at only the number of cards in the run
+			for (int i = 0; i < num; ++i){
 				hand.push_back(cards[cards.size() - (i + 1)]);
 			}
 			
-			sortCards(hand); // Sorts them for easy run calculations
+			sortCards(hand);
 			
 			int max = hand[hand.size() - 1].getValue();
 			
@@ -232,30 +226,31 @@ bool Table::pegging(){
 				num = playCard(players[i], i);
 			}
 			
+			cout << "Total: " << total << endl;
+			
 			if (num != -2){ /* If valid card and not GO */
 				removeCard(rmv, i);
 			} else if (total == 31){ /* If 31 */
 				cout << "Total is 31" << endl;
 				reset();
-			} else { /* If GO*/
+			} else { /* If GO */
 				go[i] = true;
-				if(testDone()){
+				if (testDone()){
 					reset();
+					cout << "Last Card for 1" << endl;
+					scores[i] += 1;
 				}
-				
-				cout << "Last Card" << endl;
-				scores[i] += 1;
 			}
 		}
 		
 		scores[i] += num;
 		
-		if (scores[i] >= 120){
+		if(scores[i] >= 120){
 			return true;
 		}
 	}
 	
-	return false; 
+	return false;
 }
 
 /*
