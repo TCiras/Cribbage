@@ -43,10 +43,6 @@ int Table::getScore(int num){
 bool Table::checkPlayed(Card& card){
 	int value = (card.getValue() > 10 ? 10 : card.getValue());
 	
-	cout << "Value: " << value << endl;
-	cout << "Total: " << total << endl;
-	cout << "Sum: " << value + total << endl;
-	
 	if (value + total > 31){
 		cout << "You can't do that" << endl;
 		return false;
@@ -64,8 +60,6 @@ bool Table::checkPlayed(Card& card){
 int Table::calculate(Card& card){
 	int sum = 0;
 	int value = (card.getValue() > 10 ? 10 : card.getValue());
-	
-	cout << "Called" << endl;
 	
 	cards.push_back(card);
 		
@@ -148,31 +142,43 @@ int Table::run(){ /* Not Working */
 		Deck hand;
 		count = 1;
 		
-		for (int i = 0; i < num; ++i){ // Looks at only the number of cards in the run
-			hand.push_back(cards[cards.size() - i]);
-		}
-		
-		sortCards(hand); // Sorts them for easy run calculations
-		
-		/* Mike the Commuter's Algorithm */
-		if (num == 7 && hand[hand.size() - 1].getValue() > 7){ /* Skip */
-		} else if (num == 6 && hand[hand.size() - 1].getValue() > 7){ /* Skip */
-		} else if (num == 5 && hand[hand.size() - 1].getValue() > 8){ /* Skip */
-		} else if (num == 4 && hand[hand.size() - 1].getValue() > 9){ /* Skip */
+		if (cards.size() < num){ /* Skip */
 		} else {
-			start = hand[0].getValue();
+			for (int i = 1; i < num; ++i){ // Looks at only the number of cards in the run
+				hand.push_back(cards[cards.size() - i]);
+				cout << hand[i].getValue() << " " << hand[i].getSuit() << endl;
+			}
 			
-			for (int i = 0; i < num; ++i){
-				cout << start << " " << cards[i].getValue() << endl;
-                        	if (++start == cards[i].getValue()){
-                                	++count;
-	                        } else {
-        	                        break;
-                	        }
-	                }
+			cout << "HSize: " << hand.size() << endl;
 			
-			if (count == num){
-				return num;
+			sortCards(hand); // Sorts them for easy run calculations
+			
+			int max = hand[hand.size() - 1].getValue();
+			
+			cout << "Max: " << max << endl;
+			
+			/* Mike the Commuter's Algorithm */
+			if (num == 7 && max > 7){ /* Skip */
+			} else if (num == 6 && max > 7){ /* Skip */
+			} else if (num == 5 && max > 8){ /* Skip */
+			} else if (num == 4 && max > 9){ /* Skip */
+			} else {
+				start = hand[0].getValue();
+				
+				cout << "Testing run of " << num << endl;
+				
+				for (int i = 0; i < num; ++i){
+					cout << start << " " << hand[i].getValue() << endl;
+                	        	if (++start == hand[i].getValue()){
+        	                        	++count;
+		                        } else {
+        	                	        break;
+                		        }
+	        	        }
+				
+				if (count == num){
+					return num;
+				}
 			}
 		}
 	}
@@ -340,5 +346,6 @@ void Table::printCards(Deck& hand){
 */
 void Table::removeCard(int num, int play){
 	cards.push_back(players[play][num]);
+	cards.shrink_to_fit();
 	players[play].erase(players[play].begin() + num);
 }
