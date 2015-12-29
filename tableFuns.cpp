@@ -43,6 +43,8 @@ int Table::getScore(int num){
 bool Table::checkPlayed(Card& card){
 	int value = (card.getValue() > 10 ? 10 : card.getValue());
 	
+	cout << value + total << endl;
+	
 	if (value + total > 31){
 		cout << "You can't do that" << endl;
 		return false;
@@ -230,6 +232,7 @@ bool Table::pegging(){
 			if (num != -2){ /* If valid card and not GO */
 				removeCard(rmv, i);
 			} else if (total == 31){ /* If 31 */
+				cout << "Total is 31" << endl;
 				reset();
 			} else { /* If GO*/
 				go[i] = true;
@@ -273,7 +276,7 @@ bool Table::testDone(){
 		hand = the hand from which a card is going to be played
 		play = which player
 	Output:
-		Number of points earned by playing thh card;
+		Number of points earned by playing the card;
 */
 int Table::playCard(Deck& hand, int play){
 	int num, calc;
@@ -281,11 +284,23 @@ int Table::playCard(Deck& hand, int play){
 	cout << endl << endl << "Player " << play + 1 << ":" << endl;
 	printCards(hand);
         cout << "\t5) GO" << endl;
-
-	do{
-		cout << "Play What card [0-" << hand.size() << "]: ";
-		cin >> num;
-	} while ((num < 0 && num > 5) && checkPlayed(hand[num]));
+	
+	do {
+		do {
+			cout << "Play What card [0-" << hand.size() << "]: ";
+			cin >> num;
+			
+			if (num == 5){
+				break;
+			}
+			
+		} while (num < 0 || num > hand.size());
+		
+		if (num == 5){
+			break;
+		}
+		
+	} while (!checkPlayed(hand[num]));
 	
 	if (num == 5){
 		return -2;

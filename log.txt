@@ -62,7 +62,8 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 	Something strange is happening with pegging runs.
 	I think I did the two things with 31, but when 31 is reached, the program halts indefinatly
 	ISSUE 1:
-		I just played one hand w/ pegging succesfully.  The issue is that after this one hand, the scores were:
+		I just played one hand w/ pegging succesfully.  
+		The issue is that after this one hand, the scores were:
 			P1: 120
 			P2: 117
 		which is clearly impossible.
@@ -83,6 +84,17 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 	SOlution worked. vector::clear() worked.
 	ISSUE:
 		After pegging, players recieve -1 pts.
-		They should have gotten 0.
+		They should have gotten 1.
 	ISSUE:
-		If user says to play card 7, SegFault	
+		If user says to play card 7, SegFault
+
+12/29/15
+	Fixed the problem of inputing a number to large, but still not 31s.
+	Trying to play the last card in your hand results in "You can't do that".
+	So far, there appear to only be two peoblems remaining:
+		Runs while pegging
+		Playing one's last card
+	The last card issue appears to have something to do with the other person having said GO.
+	Check played started with a total of 26.
+		8 got rejected b/c total was 35. // Should be 36
+		5 got rejected b/c total was 36. // should be 31
