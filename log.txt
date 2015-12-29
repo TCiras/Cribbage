@@ -122,4 +122,39 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 			9 -> 10 = +1
 			D -> S  = -3
 		No pattern for #'s, but always seems to play spades
-	
+	It appears that when a card is added to the deck, the deck replicates the last played card
+	It then adds the new card.  This still doens't solve the problem.
+	Game Output:
+		Player 1:
+		Your Hand: 
+			1) 2 of Hearts
+			2) 2 of Clubs
+			3) 6 of Hearts
+			4) 6 of Spades
+			5) GO
+		Play What card [0-4]: 1
+			1) 2 of Hearts // Stack
+		The 2 of Hearts was played for 0pts.
+		Pts. played is now 2.
+		
+		
+		Player 2:
+		Your Hand: 
+			1) A of Hearts
+			2) 3 of Diamonds
+			3) 4 of Diamonds
+			4) 5 of Hearts
+			5) GO
+		Play What card [0-4]: 1
+			1) 2 of Hearts // Stack
+			2) 2 of Hearts // Repeated Card
+			3) A of Hearts // Added Card
+		2 of Hearts // Lookinh for runs
+		6 of Spades
+		HSize: 2
+		Max: 2
+		Testing run of 3
+		1 1
+		The A of Hearts was played for 0pts.
+		Pts. played is now 3.
+

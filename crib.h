@@ -139,5 +139,6 @@ public:
 	int playCard(Deck&, int);
 	void printCards(Deck&);
 	int calculate(Card&);
+	void printStack();
 };
 

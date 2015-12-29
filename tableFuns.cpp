@@ -65,6 +65,8 @@ int Table::calculate(Card& card){
 		
 	total += value;
 	
+	printStack();
+	
 	sum += pairs();
 	sum += run();
 	sum += fifteen();
@@ -346,6 +348,11 @@ void Table::printCards(Deck& hand){
 */
 void Table::removeCard(int num, int play){
 	cards.push_back(players[play][num]);
-	cards.shrink_to_fit();
 	players[play].erase(players[play].begin() + num);
+}
+
+void Table::printStack(){
+	for (int i = 0; i < cards.size(); ++i){
+		cout << "\t" << i + 1 << ") " << cards[i].toString() << endl;
+	}
 }
