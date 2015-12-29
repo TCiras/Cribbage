@@ -61,11 +61,9 @@ int Table::calculate(Card& card){
 	int sum = 0;
 	int value = (card.getValue() > 10 ? 10 : card.getValue());
 	
-	cards.push_back(card);
-		
 	total += value;
 	
-	printStack();
+	cards.push_back(card);
 	
 	sum += pairs();
 	sum += run();
@@ -91,6 +89,7 @@ void Table::reset(){
 		go[i] = false;
 	}
 	cards.clear();
+	printStack();
 }
 
 
@@ -146,18 +145,13 @@ int Table::run(){ /* Not Working */
 		
 		if (cards.size() < num){ /* Skip */
 		} else {
-			for (int i = 1; i < num; ++i){ // Looks at only the number of cards in the run
-				hand.push_back(cards[cards.size() - i]);
-				cout << faces[hand[i].getValue()] << " of " << suits[hand[i].getSuit()] << endl;
+			for (int i = 0; i < num; ++i){ // Looks at only the number of cards in the run
+				hand.push_back(cards[cards.size() - (i + 1)]);
 			}
-			
-			cout << "HSize: " << hand.size() << endl;
 			
 			sortCards(hand); // Sorts them for easy run calculations
 			
 			int max = hand[hand.size() - 1].getValue();
-			
-			cout << "Max: " << max << endl;
 			
 			/* Mike the Commuter's Algorithm */
 			if (num == 7 && max > 7){ /* Skip */
@@ -169,8 +163,7 @@ int Table::run(){ /* Not Working */
 				
 				cout << "Testing run of " << num << endl;
 				
-				for (int i = 0; i < num; ++i){
-					cout << start << " " << hand[i].getValue() << endl;
+				for (int i = 1; i < num; ++i){
                 	        	if (++start == hand[i].getValue()){
         	                        	++count;
 		                        } else {
@@ -314,6 +307,7 @@ int Table::playCard(Deck& hand, int play){
 	
 	calc = calculate(hand[num - 1]);
 	if (calc == -1){
+		cards.pop_back();
 		return -1;
 	} else {
 		rmv = num - 1;
@@ -347,10 +341,13 @@ void Table::printCards(Deck& hand){
 		play = which player (Index)
 */
 void Table::removeCard(int num, int play){
-	cards.push_back(players[play][num]);
+	cout << "Playing " << players[play][num].toString() << endl;
 	players[play].erase(players[play].begin() + num);
 }
 
+/*
+	Prints all cards that have been played
+*/
 void Table::printStack(){
 	for (int i = 0; i < cards.size(); ++i){
 		cout << "\t" << i + 1 << ") " << cards[i].toString() << endl;

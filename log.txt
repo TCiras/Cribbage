@@ -122,7 +122,7 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 			9 -> 10 = +1
 			D -> S  = -3
 		No pattern for #'s, but always seems to play spades
-	It appears that when a card is added to the deck, the deck replicates the last played card
+	It appears that when a card is added to the deck, the deck replicates the last played card.
 	It then adds the new card.  This still doens't solve the problem.
 	Game Output:
 		Player 1:
@@ -149,7 +149,7 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 			1) 2 of Hearts // Stack
 			2) 2 of Hearts // Repeated Card
 			3) A of Hearts // Added Card
-		2 of Hearts // Lookinh for runs
+		2 of Hearts // Looking for runs
 		6 of Spades
 		HSize: 2
 		Max: 2
@@ -157,4 +157,9 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 		1 1
 		The A of Hearts was played for 0pts.
 		Pts. played is now 3.
+	RESOLVED (Finally):
+		Aparently I was telling the game to add the card in order to do the calculations and then add it again in order to remove it from the player's hand.
+		That solved the replication problem.
+		The runs problem uccored as it was testing against itself instead of the next card.
+	All that remains is when 31 is reached, it doesn't reset immedeatly.
 
