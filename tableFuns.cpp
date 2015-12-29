@@ -43,7 +43,9 @@ int Table::getScore(int num){
 bool Table::checkPlayed(Card& card){
 	int value = (card.getValue() > 10 ? 10 : card.getValue());
 	
-	cout << value + total << endl;
+	cout << "Value: " << value << endl;
+	cout << "Total: " << total << endl;
+	cout << "Sum: " << value + total << endl;
 	
 	if (value + total > 31){
 		cout << "You can't do that" << endl;
@@ -64,10 +66,6 @@ int Table::calculate(Card& card){
 	int value = (card.getValue() > 10 ? 10 : card.getValue());
 	
 	cout << "Called" << endl;
-	
-	if (!checkPlayed(card)){
-		return -1;
-	}
 	
 	cards.push_back(card);
 		
@@ -300,7 +298,7 @@ int Table::playCard(Deck& hand, int play){
 			break;
 		}
 		
-	} while (!checkPlayed(hand[num]));
+	} while (!checkPlayed(hand[num - 1]));
 	
 	if (num == 5){
 		return -2;
