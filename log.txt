@@ -106,3 +106,8 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 		1 3 4 2 - scrambled run of 4
 	Testing:
 		2 4 0 4 - two match, but...
+	Interesting:
+		I played the 10 of Clubs, all is well
+		I played the 9 of Diamonds, runs rested the 10 of spades (off by 1)
+		But it works properly for 15s and pairs...
+

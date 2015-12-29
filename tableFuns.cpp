@@ -146,7 +146,7 @@ int Table::run(){ /* Not Working */
 		} else {
 			for (int i = 1; i < num; ++i){ // Looks at only the number of cards in the run
 				hand.push_back(cards[cards.size() - i]);
-				cout << hand[i].getValue() << " " << hand[i].getSuit() << endl;
+				cout << faces[hand[i].getValue()] << " of " << suits[hand[i].getSuit()] << endl;
 			}
 			
 			cout << "HSize: " << hand.size() << endl;
