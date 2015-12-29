@@ -65,8 +65,11 @@ int Table::calculate(Card& card){
 	
 	cards.push_back(card);
 	
+	cout << pairs() << " in pairs" << endl;
 	sum += pairs();
+	cout << run() << " in a run" << endl;
 	sum += run();
+	cout << fifteen() << " for fifteen" << endl;
 	sum += fifteen();
 	
 	if (total == 31){
@@ -114,13 +117,16 @@ int Table::fifteen(){
 int Table::pairs(){
 	int sum = 0, size = cards.size() - 1;
 	
-	if (size == 1){
+	cout << cards[size].getValue() << " vs " << cards[size - 1].getValue() << endl;
+	cout << cards.size() << endl;
+	
+	if (size + 1 == 1){
 		sum = 0;
 	} else if (cards[size].getValue() == cards[size - 1].getValue()){
-		if (size == 2){
+		if (size + 1 == 2){
 			sum += 2;
 		} else if (cards[size].getValue() == cards[size - 2].getValue()){
-			if(size == 3){
+			if(size + 1 == 3){
 				sum += 4;
 			} else if (cards[size].getValue() == cards[size - 3].getValue()){
 				sum += 6;
@@ -160,8 +166,6 @@ int Table::run(){ /* Not Working */
 			} else if (num == 4 && max > 9){ /* Skip */
 			} else {
 				start = hand[0].getValue();
-				
-				cout << "Testing run of " << num << endl;
 				
 				for (int i = 1; i < num; ++i){
                 	        	if (++start == hand[i].getValue()){
