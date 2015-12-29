@@ -108,6 +108,18 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 		2 4 0 4 - two match, but...
 	Interesting:
 		I played the 10 of Clubs, all is well
-		I played the 9 of Diamonds, runs rested the 10 of spades (off by 2)
+		I played the 9 of Diamonds, runs rested the 10 of Spades (off by 2)
 		But it works properly for 15s and pairs...
-
+	Problem:
+		Played:
+			3 of Diamonds - succesfully added
+			2 of Hearts   - added 4 of Spades
+		Note:
+			2 of Hearts -> 4 of Spades
+			2 -> 4 = +2
+			H -> S = -1
+	Previously:
+			9 -> 10 = +1
+			D -> S  = -3
+		No pattern for #'s, but always seems to play spades
+	
