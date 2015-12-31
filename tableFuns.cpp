@@ -91,9 +91,7 @@ void Table::reset(){
 		go[i] = false;
 	}
 	cards.clear();
-	printStack();
 }
-
 
 /*
 	Checks the played cards for fifteen
@@ -198,6 +196,9 @@ bool Table::pegging(){
 	int num;
 	
 	for (int i = 0; ; ++i){ /* Issue is here */
+		cout << "Player 1 has gotten " << getScore(0) << endl;
+		cout << "Player 2 has gotten " << getScore(1) << endl;
+		
 		if (i == players.size()){ /* Rotate properly through the players */
 			i = 0;
 		}
