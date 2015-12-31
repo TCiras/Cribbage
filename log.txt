@@ -193,13 +193,17 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 		Player 1: // Total = 4 
 		The 3 of Spades was played for 0pts.
 		Player 2: // Total = 4
-		The 5 of Clubs was played for 0pts.
-		Player 1 Gets: 2
-		Player 2 Gets: 2
-		Player 1's hand:			Player 2's hand:			The crib contains: // Player 2
+		The 5 of Clubs was played for 0pts. // Didn't get Last Card
+		Player 1 Gets: 2 - Missing 2pts
+		Player 2 Gets: 2 - Missing 3pts
+		Player 1's hand:			Player 2's hand:			The crib contains:
 			Pts: 7					Pts: 10					Pts: 12
 		Player 1: 9  // 7+2     - Missing Two Pts
-		Player 2: 24 // 10+12+2 - Missing Two Pts
+		Player 2: 24 // 10+12+2 - Missing Three Pts (Has Crib)
 	Somehow, Points were lost.
 	Game still doesn't know how to deal with player having no cards left and not 31
 	Fixed that.  New problem, player can say GO whenever they want.
+	Just played a hand where player 1 pegged for -2 pts and player 2 pagged for -4 pts.
+	Player can no longer say GO when unnessicary, but negative pegging still an issue
+	ALso, one time, player couldn't say go when needed.
+	

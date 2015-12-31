@@ -214,6 +214,8 @@ bool Table::pegging(){
 			}
 			
 			if (done){
+				cout << "Last Card for 1" << endl;
+				scores[i] += 1;
 				break;
 			} else {
 				go[i] = true;
