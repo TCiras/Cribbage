@@ -134,6 +134,7 @@ public:
 	void reset();
 	void sortCards(Deck&);
 	int getScore(int);
+	bool showGo(int);
 	void removeCard(int, int);
 	bool pegging();
 	int playCard(Deck&, int);

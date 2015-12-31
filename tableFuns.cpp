@@ -63,6 +63,8 @@ int Table::calculate(Card& card){
 	
 	total += value;
 	
+	cout << "Total: " << total << endl;
+	
 	cards.push_back(card);
 	
 	sum += pairs();
@@ -121,9 +123,9 @@ int Table::pairs(){
 			sum += 2;
 		} else if (cards[size].getValue() == cards[size - 2].getValue()){
 			if(size + 1 == 3){
-				sum += 4;
-			} else if (cards[size].getValue() == cards[size - 3].getValue()){
 				sum += 6;
+			} else if (cards[size].getValue() == cards[size - 3].getValue()){
+				sum += 12;
 			}
 		}
 	}
@@ -213,6 +215,8 @@ bool Table::pegging(){
 			
 			if (done){
 				break;
+			} else {
+				go[i] = true;
 			}
 		} else if (go[i] == true){ /* Looks to see if all have said go */
 			if(testDone()){
@@ -281,20 +285,20 @@ int Table::playCard(Deck& hand, int play){
 	
 	cout << endl << endl << "Player " << play + 1 << ":" << endl;
 	printCards(hand);
-        cout << "\t5) GO" << endl;
+	bool go = showGo(play);
 	
 	do {
 		do {
 			cout << "Play What card [0-" << hand.size() << "]: ";
 			cin >> num;
 			
-			if (num == 5){
+			if (num == 5 && go == true){
 				break;
 			}
 			
 		} while (num < 0 || num > hand.size());
 		
-		if (num == 5){
+		if (num == 5 && go == true){
 			break;
 		}
 		
@@ -312,6 +316,25 @@ int Table::playCard(Deck& hand, int play){
 		rmv = num - 1;
 		return calc;
 	}
+}
+
+/*
+	Decides if player can say go and displays the option only if necessary
+	Input:
+		play = the humber of the player
+	Output:
+		A bool that is true if the player can say go
+*/
+bool Table::showGo(int play){
+	for (int i = 0; i < players[play].size(); ++i){
+		int value = (players[play][i].getValue() > 10 ? 10 : players[play][i].getValue());
+		if (value + total < 31){
+			return false;
+		}
+	}
+	
+	cout << "\t5) GO" << endl;
+	return true;
 }
 
 /*

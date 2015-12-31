@@ -168,3 +168,38 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 	Now, every time you say GO, you get the point for last card.
 	The only issue that appears to be remaining is the 31 problem.
 
+12/31/15
+	So Player two should have recieved six points, but instead recieved -6.
+	Simple fix, but error worth noting.
+	Now it appears that the player who plays a card for 31 is not recieving the extra two pts.
+	Results of a game, Problems kept:
+		Player 1: // Total = 0
+		The 9 of Diamonds was played for 0pts.
+		Player 2: // Total = 0
+		The 5 of Spades was played for 0pts.
+		Player 1: // Total = 0
+		The 4 of Spades was played for 0pts.
+		Player 2: // Total = 0
+		The 3 of Diamonds was played for 3pts.
+		Player 1: // Total = 0
+		The 2 of Spades was played for 4pts.
+		Player 2: // Total = 3
+		The 7 of Hearts was played for 0pts.
+		Player 1: // Total = 4
+		Play What card [0-1]: 5 // GO
+		Player 2: // Total = 3
+		Play What card [0-1]: 5 // GO
+		Last Card for 1
+		Player 1: // Total = 4 
+		The 3 of Spades was played for 0pts.
+		Player 2: // Total = 4
+		The 5 of Clubs was played for 0pts.
+		Player 1 Gets: 2
+		Player 2 Gets: 2
+		Player 1's hand:			Player 2's hand:			The crib contains: // Player 2
+			Pts: 7					Pts: 10					Pts: 12
+		Player 1: 9  // 7+2     - Missing Two Pts
+		Player 2: 24 // 10+12+2 - Missing Two Pts
+	Somehow, Points were lost.
+	Game still doesn't know how to deal with player having no cards left and not 31
+	Fixed that.  New problem, player can say GO whenever they want.

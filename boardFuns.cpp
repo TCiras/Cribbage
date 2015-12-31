@@ -256,8 +256,10 @@ bool Board::pegging(){
 	bool var = peg.pegging();
 	
 	for(int i = 0; i < numPlayers(); ++i){
-		cout << players[i].getPts() - peg.getScore(i) << endl;
-		players[i].peg(players[i].getPts() - peg.getScore(i));
+		cout << endl << endl << endl << "peg.getScore(i): " << peg.getScore(i) << endl;
+		cout << "players[i].getPts(): " << players[i].getPts() << endl;
+		cout << "Total: " << peg.getScore(i) - players[i].getPts() << endl;
+		players[i].peg(peg.getScore(i) - players[i].getPts());
 	}
 	
 	return var;
