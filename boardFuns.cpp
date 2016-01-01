@@ -111,6 +111,9 @@ bool Board::playTurn(DeckOfCards& deck){
 		return true;
 	}
 	
+	cout << "The top card is; " << endl;
+	cout << "\t\t" << faces[top.getValue()] << " of " << suits[top.getSuit()] << endl;
+	
 	printAll();
 	
 	return count();

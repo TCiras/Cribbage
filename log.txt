@@ -205,5 +205,12 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 	Fixed that.  New problem, player can say GO whenever they want.
 	Just played a hand where player 1 pegged for -2 pts and player 2 pagged for -4 pts.
 	Player can no longer say GO when unnessicary, but negative pegging still an issue
-	ALso, one time, player couldn't say go when needed.
+	Also, one time, player couldn't say go when needed.
+
+1/1/16
+	Happy New Year!
+	The Smiths were here last night and Ian was able to help me fix the minus two problem.
+	There are still a few problems remaining though:
+		Premature GO Option
+		If GO/31 uccors with a player's last card, the other player cannot play all of theirs
 	

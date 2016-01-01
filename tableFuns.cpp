@@ -196,17 +196,18 @@ bool Table::pegging(){
 	int num;
 	
 	for (int i = 0; ; ++i){ /* Issue is here */
-		cout << "Player 1 has gotten " << getScore(0) << endl;
-		cout << "Player 2 has gotten " << getScore(1) << endl;
-		
+		num = 0;
+
 		if (i == players.size()){ /* Rotate properly through the players */
 			i = 0;
 		}
 		
+		cout << "Player " << i + 1 << "'s turn." << endl;
+		
 		if (players[i].size() == 0){ /* If the player has no cards left */
 			bool done = true;
 			for (int j = 0; j < players.size(); ++j){ /* See if anyone else has cards */
-				if (players[j].size() == 0){
+				if (players[j].size() == 0 || go[j]){
 					done = true;
 				} else {
 					done = false;
@@ -220,11 +221,14 @@ bool Table::pegging(){
 				break;
 			} else {
 				go[i] = true;
+				cout << "Player " << i + 1 << " has no cards, says go." << endl;
+				num = -2;
 			}
 		} else if (go[i] == true){ /* Looks to see if all have said go */
 			if(testDone()){
 				reset();
 			}
+			num = -2;
 		} else { /* Player plays a card */
 			num = playCard(players[i], i);
 			while (num == -1){ /* Invalid card */
@@ -237,10 +241,12 @@ bool Table::pegging(){
 			
 			if (num != -2){ /* If valid card and not GO */
 				removeCard(rmv, i);
-			} else if (total == 31){ /* If 31 */
+			}
+			if (total == 31){ /* If 31 */
 				cout << "Total is 31" << endl;
 				reset();
-			} else { /* If GO */
+			}
+			if (num == -2){ /* If GO */
 				go[i] = true;
 				if (testDone()){
 					reset();
@@ -250,9 +256,11 @@ bool Table::pegging(){
 			}
 		}
 		
-		scores[i] += num;
+		if (num != -2){
+			scores[i] += num;
+		}
 		
-		if(scores[i] >= 120){
+		if (scores[i] >= 120){
 			return true;
 		}
 	}
