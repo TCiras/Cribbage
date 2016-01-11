@@ -205,11 +205,14 @@ bool Table::pegging(){
 		cout << "Player " << i + 1 << "'s turn." << endl;
 		
 		if (players[i].size() == 0){ /* If the player has no cards left */
+			cout << "Testing for empty hands" << endl;
 			bool done = true;
 			for (int j = 0; j < players.size(); ++j){ /* See if anyone else has cards */
-				if (players[j].size() == 0 || go[j]){
+				if (players[j].size() == 0){
+					cout << "Player " << j + 1 << " has no cards" << endl;
 					done = true;
 				} else {
+					cout << "Player " << j + 1 << " cards" << endl;
 					done = false;
 					break;
 				}
@@ -224,7 +227,9 @@ bool Table::pegging(){
 				cout << "Player " << i + 1 << " has no cards, says go." << endl;
 				num = -2;
 			}
-		} else if (go[i] == true){ /* Looks to see if all have said go */
+		}
+		 
+		if (go[i] == true){ /* Looks to see if all have said go */
 			if(testDone()){
 				reset();
 			}

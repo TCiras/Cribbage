@@ -165,6 +165,9 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 	It also turns out that pairs have stopped working.  Strange.
 	Fixed that.  Now I just need to insure that 31s work.
 	Moment of panic: accedently deleted a huge chunk of code.  Thank's github for savining me.
+
+1/11/16
+	
 	Now, every time you say GO, you get the point for last card.
 	The only issue that appears to be remaining is the 31 problem.
 
@@ -213,4 +216,8 @@ g++ --std=c++0x boardFuns.cpp playerFuns.cpp handFuns.cpp tableFuns.cpp cardsFun
 	There are still a few problems remaining though:
 		Premature GO Option
 		If GO/31 uccors with a player's last card, the other player cannot play all of theirs
+
+1/11/16
+	Possible solution to last cards problem.  Changed if else if else in Table::pegging to if if else
+	Should allow for peopper check of GO, but haven't been able to create the situation.
 	
